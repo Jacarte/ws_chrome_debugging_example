@@ -21,7 +21,7 @@ Demo is in JS, but the great thing is we can use any Websocket language implemen
     "webSocketDebuggerUrl": "ws://localhost:9222/devtools/page/926A781407E057C7AE6A2C6F1E61B371"
     } ]
     ```
-    Where each array entry is a tab (the devtools panel tool if its open)
+    Where each array entry is a tab (the devtools panel too if its open)
 5. Then, open a websocket channel targeting the tab **webSocketDebuggerUrl**
 6. Start to talking to chrome debugging interface like Runtime.enable method call <https://chromedevtools.github.io/devtools-protocol/v8/Runtime> at open channel event.
 ```js
