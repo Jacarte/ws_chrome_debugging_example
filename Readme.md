@@ -1,10 +1,7 @@
 
 # Listen for chrome websocket debugging interface
 
-## Basic workflow
-
-Demo is in JS, but the great thing is we can use any Websocket language implementation for it.
-
+## Basic workflow (Based on <https://www.igvita.com/2012/04/09/driving-google-chrome-via-websocket-api/>)
 
 
 1. Open your browser with --remote-debugging-port=(port)
@@ -36,6 +33,8 @@ ws.on('message', function incoming(data) {
     console.log(data);
 });
 ```
+
+You can see index.js file for NodeJS listener process demo
 
 ## Example
 
