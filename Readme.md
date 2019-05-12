@@ -1,6 +1,8 @@
 
 # Listen for chrome websocket debugging interface
 
+**Understanding [chrome-remote-interface](https://github.com/cyrus-and/chrome-remote-interface/blob/master/README.md) package implementation**
+
 ## Basic workflow (Based on <https://www.igvita.com/2012/04/09/driving-google-chrome-via-websocket-api/>)
 
 
@@ -32,6 +34,36 @@ This will enable the runtime listening capability
 ws.on('message', function incoming(data) {
     console.log(data);
 });
+```
+
+## How to execute remote method
+
+Following the DevTools [documentation](https://chromedevtools.github.io/devtools-protocol/v8/Profiler), basically to run it, we have to send a WS message as follows:
+
+```json
+{
+    "id": "RequestUniqueID",
+    "method": "MethodName",
+    "params": {
+        "key": "value" // For each value described as parameter in documentation
+    }
+}
+```
+
+
+The call result can be seen in the Runtime listener with the unique sent Id as identification
+
+```json
+{
+    "id":"RequestUniqueID",
+    "result":
+        {
+            "result":
+            {
+                "type":"undefined"
+            }
+        }
+}
 ```
 
 You can see index.js file for NodeJS listener process demo
