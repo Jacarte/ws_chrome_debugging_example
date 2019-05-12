@@ -13,7 +13,7 @@ var sleep = require('system-sleep')
 // ./Users/javiercabrera/Applications/Chromium.app/Contents/MacOS/Chrome
 
 const port = 9222;
-const waitFor = 10;
+const waitFor = 5;// 5 seconds
 const timeout = (20 + waitFor)*1000; //10 seconds
 
 const chrome = spawn('/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome',[
@@ -47,6 +47,14 @@ req(`http://localhost:${port}/json`,function (error, response, body) {
   ws.on('open', function open() {
 
     ws.send(JSON.stringify({id: 1, method: 'Runtime.enable'}))
+
+    ws.send(JSON.stringify({
+      id: 2,
+      method: 'Runtime.evaluate',
+      params: {
+        expression: 'console.log(10 + 12)'
+      }
+    }))
   });
 
   ws.on('message', function incoming(data) {
