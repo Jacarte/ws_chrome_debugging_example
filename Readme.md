@@ -36,6 +36,12 @@ ws.on('message', function incoming(data) {
 
 You can see index.js file for NodeJS listener process demo
 
+## Run demo
+
+```bash
+npm run start (url)
+```
+
 ## Example
 
 #### Executed javascript code in browser
