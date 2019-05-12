@@ -52,7 +52,7 @@ req(`http://localhost:${port}/json`,function (error, response, body) {
       id: 2,
       method: 'Runtime.evaluate',
       params: {
-        expression: 'console.log(10 + 12)'
+        expression: '10 + 12'
       }
     }))
   });

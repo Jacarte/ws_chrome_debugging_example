@@ -66,6 +66,30 @@ The call result can be seen in the Runtime listener with the unique sent Id as i
 }
 ```
 
+```js
+ws.send({
+    "id": 2,
+    "method": "Runtime.evaluate",
+    "params": {
+        "expression": "1 + 2"
+    }
+})
+...
+// Resulting in
+{
+    "id":2,
+    "result":
+    {
+        "result":
+        {
+            "type":"number",
+            "value":22,
+            "description":"22"
+        }
+    }
+}
+```
+
 You can see index.js file for NodeJS listener process demo
 
 ## Run demo
