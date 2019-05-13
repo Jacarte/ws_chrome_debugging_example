@@ -1,5 +1,5 @@
 
-# Listen for chrome websocket debugging interface
+# Listen to chrome websocket debugging interface
 
 **Understanding [chrome-remote-interface](https://github.com/cyrus-and/chrome-remote-interface/blob/master/README.md) package implementation**
 
