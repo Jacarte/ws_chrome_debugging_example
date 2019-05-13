@@ -36,7 +36,7 @@ ws.on('message', function incoming(data) {
 });
 ```
 
-## How to execute remote method
+## How to execute remote methods ?
 
 Following the DevTools [documentation](https://chromedevtools.github.io/devtools-protocol/v8/Profiler), basically to run it, we have to send a WS message as follows:
 
