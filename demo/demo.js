@@ -6,7 +6,8 @@ function b(){
     console.log("I am b")
 }
 
-a();
-b();
 
-console.log(123)
+
+setTimeout(() => {
+    eval("b()")
+}, 1000)

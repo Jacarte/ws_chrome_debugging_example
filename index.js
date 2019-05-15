@@ -14,7 +14,7 @@ var sleep = require('system-sleep')
 
 const port = 9222;
 const waitFor = 5;// 5 seconds
-const timeout = (20 + waitFor)*1000; //10 seconds
+const timeout = (60 + waitFor)*1000; //10 seconds
 
 const chrome = spawn('/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome',[
   '--remote-debugging-port='+port,
@@ -46,13 +46,15 @@ req(`http://localhost:${port}/json`,function (error, response, body) {
 
   ws.on('open', function open() {
 
+    ws.send(JSON.stringify({id: 3, method: 'Debugger.enable'}))
+    ws.send(JSON.stringify({id: 4, method: 'Debugger.enable'}))
     ws.send(JSON.stringify({id: 1, method: 'Runtime.enable'}))
 
     ws.send(JSON.stringify({
       id: 2,
-      method: 'Runtime.evaluate',
+      method: 'Runtime.addBinding',
       params: {
-        expression: '10 + 12'
+        name: "eval"
       }
     }))
   });
