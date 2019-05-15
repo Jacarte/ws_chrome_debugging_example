@@ -47,7 +47,6 @@ req(`http://localhost:${port}/json`,function (error, response, body) {
   ws.on('open', function open() {
 
     ws.send(JSON.stringify({id: 3, method: 'Debugger.enable'}))
-    ws.send(JSON.stringify({id: 4, method: 'Debugger.enable'}))
     ws.send(JSON.stringify({id: 1, method: 'Runtime.enable'}))
 
     ws.send(JSON.stringify({
