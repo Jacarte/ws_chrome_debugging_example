@@ -51,7 +51,7 @@ req(`http://localhost:${port}/json`,function (error, response, body) {
 
     ws.send(JSON.stringify({
       id: 2,
-      method: 'Runtime.addBinding',
+      method: 'Runtime.addBinding', // Beta feature, trying to detect the use of eval global function
       params: {
         name: "eval"
       }
