@@ -1,5 +1,5 @@
 
-# Listen to chrome websocket debugging interface (MACOS Chrome launch)
+# Listen to chrome websocket debugging interface
 
 **Understanding [chrome-remote-interface](https://github.com/cyrus-and/chrome-remote-interface/blob/master/README.md) package implementation**
 
@@ -97,6 +97,8 @@ You can see index.js file for NodeJS listener process demo
 ```bash
 npm run start (url)
 ```
+
+### The demo code works in MACOS,if you want to open in other OS, change line 19 in <a href="https://github.com/Jacarte/ws_chrome_debugging_example/blob/master/index.js">index.js</a> to launch correct chrome executable
 
 ## Example
 
