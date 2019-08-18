@@ -45,7 +45,7 @@ ws.on('message', function incoming(data) {
 
 ## How to execute remote methods ?
 
-Following the DevTools [documentation](https://chromedevtools.github.io/devtools-protocol/v8/Profiler), basically to run it, we have to send a WS message as follows:
+Following the DevTools [documentation](https://chromedevtools.github.io/devtools-protocol/v8/Profiler), basically to run it, you need to send a WS message as follows:
 
 ```json
 {
@@ -58,7 +58,7 @@ Following the DevTools [documentation](https://chromedevtools.github.io/devtools
 ```
 
 
-The call result can be seen in the Runtime listener with the unique sent Id as identification
+The call result is showed in the Runtime listener with the unique sent Id as identifier
 
 ```json
 {
