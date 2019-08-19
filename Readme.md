@@ -26,7 +26,7 @@
     // NodeJS example
 
         ws.send(
-            JSON.stringigy({{id: 1, method: 'Runtime.enable'}}))
+            JSON.stringify({{id: 1, method: 'Runtime.enable'}}))
     ```
 
     - [Network profiler](https://chromedevtools.github.io/devtools-protocol/tot/Network) 
@@ -34,7 +34,7 @@
     // NodeJS example
 
     ws.send(
-        JSON.stringigy({{id: 1, method: 'Network.enable'}}))
+        JSON.stringify({{id: 1, method: 'Network.enable'}}))
     ```
 
 
