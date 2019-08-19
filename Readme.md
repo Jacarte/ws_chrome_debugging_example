@@ -18,7 +18,7 @@
     "webSocketDebuggerUrl": "ws://localhost:9222/devtools/page/926A781407E057C7AE6A2C6F1E61B371"
     } ]
     ```
-    Where each array entry is a tab (the devtools panel too if its open)
+    Every tab in the broser session will be represented in this json object as an array entry. The properties of each entry are: page description, id, title of the page, url of the page and the websocket address to access the debugging interface.
 5. Then, open a websocket channel targeting the tab **webSocketDebuggerUrl**
 6. Start to talking to chrome debugging interface like Runtime.enable method call <https://chromedevtools.github.io/devtools-protocol/v8/Runtime> at open channel event.
     - [Runtime channel](https://chromedevtools.github.io/devtools-protocol/tot/Runtime) 
