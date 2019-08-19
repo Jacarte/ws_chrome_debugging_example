@@ -1,4 +1,10 @@
 node_modules
-demo/tmp
-demo/temp
-logs
+
+log*.txt
+temp
+
+group.json
+
+profiling
+cookies
+html_demo

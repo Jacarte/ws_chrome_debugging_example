@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head> 
+<body>
+    <div>
+        <input id="ws_address" placeholder="websocket address"/>
+        <button id="start_btn">Start</button>
+        <img id="preview" style="position:absolute; width: 100%; border: 1px solid white; height:100%; left: 0; top:40px"/>
+    </div>
+    <script>
+        document.getElementById("start_btn").onclick = function(e){
+
+            const address = document.getElementById("ws_address").value
+
+            ws = new WebSocket(address);
+
+            ws.onopen = function open() {
+
+                ws.send(JSON.stringify({id: 3, method: 'Page.enable'}))
+                ws.send(JSON.stringify({id: 5, method: 'Runtime.enable'}))
+
+                
+            }
+
+            ws.onmessage = function incoming(data) {
+
+                const obj = JSON.parse(data.data)
+
+                console.log(obj)
+                if(obj.id === 3){
+
+                    ws.send(JSON.stringify({
+                        id: 1001,
+                        method: "Page.navigate",
+                        params: {
+                            url: "http://kth.se"
+                        }
+                    }))
+
+                }
+
+                if(obj.id === 1001){
+
+                    setInterval(function() {
+
+                            ws.send(JSON.stringify({
+                            id: 1000,
+                            method: "Page.captureScreenshot"
+                        }))
+                    }, 1000)
+
+                }
+
+                if(obj.id === 1000){
+                    document.getElementById("preview").src = `data:image/png;base64,${obj.result.data}`
+                }
+
+            };
+        
+        }
+    </script>
+</body>
+</html>
