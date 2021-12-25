@@ -144,6 +144,15 @@ let interval2 = setTimeout(() => {
           ws.send(req)
         }
       }
+      if (obj.method == "Network.responseReceived") {
+        if (obj.params.response.mimeType == "application/wasm") {
+          // Download and save
+          console.log("Downloading static")
+          req.get(obj.params.response.url, (err, data, body) => {
+            saveIfUnique(data, obj.params.response.url)
+          });
+        }
+      }
 
     });
 
