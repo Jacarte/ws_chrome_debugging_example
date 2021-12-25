@@ -8,8 +8,9 @@ const req = require("request");
 var sleep = require('system-sleep')
 const fs = require("fs");
 const { del } = require('request');
+const sites = require('./sites.json');
 
-
+let SITES = sites.SITES;
 const port = 9222;
 const waitFor = 500;// milliseconds
 const timeout = (10 + waitFor) * 1000; //10 seconds
@@ -64,8 +65,7 @@ function saveIfUnique(data, identifier) {
 // /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 const chrome = spawn('/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome', [
   '--remote-debugging-port=' + port,
-  '--user-data-dir=temp',
-  process.argv[2]
+  '--user-data-dir=temp', process.argv[2]
 ]);
 
 chrome.stdout.on('data', function (data) {
@@ -100,14 +100,42 @@ let interval2 = setTimeout(() => {
 
     ws.on('open', function open() {
 
+      let minID = getID();
+      let minID2 = getID();
+      let minID3 = getID();
       ws.send(JSON.stringify({ id: 3, method: 'Network.enable' }))
-      ws.send(JSON.stringify({ id: 4, method: 'Runtime.enable' }))
+
+
+      ws.send(JSON.stringify({ id: minID, method: 'Runtime.enable' }))
+      LISTENERS[minID2] = [
+        (ret, reqt) => {
+
+
+          /*  ws.send(JSON.stringify({
+             id: minID3, method: 'Page.addScriptToEvaluateOnNewDocument', params: {
+               source: `
+                 let old = WebAssembly.instantiate;
+ 
+                 WebAssembly.instantiate = function(binary, env){
+ 
+                   console.log("BINARY", binary)
+                   return old(binary, env)
+                 }
+               `,
+               includeCommandLineAPI: true
+             }
+           }))
+  */
+        },
+        {}
+      ];
+      ws.send(JSON.stringify({ id: minID2, method: 'Page.enable' }))
       ws.send(JSON.stringify({ id: 5, method: 'Debugger.enable' }))
 
     });
 
     ws.on("close", function () {
-
+      fs.writeSync(`out/binaries.json`, JSON.stringify(HASHES))
       process.exit(0)
     })
 
@@ -115,10 +143,6 @@ let interval2 = setTimeout(() => {
 
       fs.writeSync(log, data + "\n")
       const obj = JSON.parse(data)
-
-      //if ("params" in obj) {
-
-      //const id = obj.params.requestId
 
       // Parse returns
       if (obj.id in LISTENERS) {
@@ -137,10 +161,12 @@ let interval2 = setTimeout(() => {
             }
           });
           LISTENERS[id] = [(ret, req) => {
-            let buff = new Buffer(ret.result.bytecode, 'base64');
-            saveIfUnique(buff, req.params.url)
+            if (ret.result && ret.result.bytecode) {
+              let buff = new Buffer(ret.result.bytecode, 'base64');
+              saveIfUnique(buff, req.params.url)
+            }
           }, obj]
-          console.log(req);
+          //console.log(req);
           ws.send(req)
         }
       }
@@ -154,10 +180,22 @@ let interval2 = setTimeout(() => {
         }
       }
 
+
     });
 
-  });
 
+    // Web Scrapper
+    setInterval(() => {
+      let u = SITES.shift();
+      console.log(SITES.length, u)
+      ws.send(JSON.stringify({
+        id: getID(), method: 'Page.navigate', params: {
+          url: `https://${u}`
+        }
+      }))
+    }, 500)
+
+  });
 
   clearTimeout(interval2)
 }, waitFor)
